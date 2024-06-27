@@ -1,0 +1,33 @@
+﻿@page "/cats"
+
+@inject AnimalsController AnimalsController
+
+<h3>Cats</h3>
+
+@if (cats == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <ul>
+        @foreach (var cat in cats)
+        {
+            <li>@cat.AnimalName (@cat.DateOfBirth years old, @cat.Gender)</li>
+        }
+    </ul>
+    <div class="d-flex justify-content-start">
+        <a role="button" class="d-flex align-items-start flex-column mb-3 btn btn-secondary me-2" href="/">
+            <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Back
+        </a>
+    </div>
+}
+
+@code {
+    private IEnumerable<Animals> cats;
+
+    protected override async Task OnInitializedAsync()
+    {
+        cats = await AnimalsController.GetCatsAsync();
+    }
+}

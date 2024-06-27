@@ -1,0 +1,36 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+
+    <main>
+       <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom bg-light text-dark">
+                 <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                   <span class="fs-4 mx-4">PawsitivePetAdoption</span>
+                 </a>
+       
+                 <ul class="nav nav-pills">
+                     <li class="nav-item mx-2">
+                         <NavLink class="nav-link active" href="registration" aria-current="page">
+                             Registration
+                         </NavLink>
+                     </li>
+                     
+                     <li class="nav-item mx-2">
+                         <NavLink class="btn btn-outline-primary" href="account/login" >
+                             Login
+                         </NavLink>
+                     </li>
+                 </ul>
+               </header>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>

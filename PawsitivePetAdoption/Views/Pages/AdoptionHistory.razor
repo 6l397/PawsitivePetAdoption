@@ -1,0 +1,50 @@
+@page "/adoptionhistory"
+
+@rendermode InteractiveServer
+@inject AnimalsController AnimalsController
+
+<PageTitle>Adoption History</PageTitle>
+
+@if (adoptions == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h3>Adoption History</h3>
+    <table class="table table-striped table-bordered table-hover mt-2">
+        <thead class="table-dark">
+        <tr>
+            <th>Adoption ID</th>
+            <th>Adopter Name</th>
+            <th>Animal Name</th>
+            <th>Adoption Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var adoption in adoptions)
+        {
+            <tr>
+                <td>@adoption.AdoptionsId</td>
+                <td>@adoption.Adopter.FirstName @adoption.Adopter.LastName</td>
+                <td>@adoption.Animal.AnimalName</td>
+                <td>@adoption.AdoptionDate.ToString("yyyy-MM-dd")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-start">
+        <a role="button" class="d-flex align-items-start flex-column mb-3 btn btn-secondary me-2" href="/allanimals">
+            <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Back
+        </a>
+    </div>
+}
+
+@code {
+    private IEnumerable<Adoptions> adoptions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        adoptions = await AnimalsController.GetAdoptionsAsync();
+    }
+}

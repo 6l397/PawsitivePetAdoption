@@ -1,0 +1,139 @@
+@page "/editanimal"
+@page "/editanimal/{id:int}"
+
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+@inject AnimalsController AnimalsController
+
+<PageTitle>@title</PageTitle>
+
+<h3>@title</h3>
+
+@if (animal == null)
+{
+<p><em>Loading...</em></p>
+}
+else
+{
+<div class="row">
+    <div class="col-md-4">
+        <EditForm Model="@animal" OnValidSubmit="HandleSubmit" FormName="animalEditForm">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="mb-3">
+                <label for="name" class="form-label">Name: </label>
+                <InputText id="name" @bind-Value="animal.AnimalName" class="form-control" />
+                <ValidationMessage For="() => animal.AnimalName" />
+            </div>
+            <div class="mb-3">
+                <label for="species" class="form-label">Species: </label>
+                <InputSelect id="species" @bind-Value="animal.Species" class="form-control">
+                    <option value="">Select species</option>
+                    <option value="Dog">Dog</option>
+                    <option value="Cat">Cat</option>
+                    <!-- Add other species as needed -->
+                </InputSelect>
+                <ValidationMessage For="() => animal.Species" />
+            </div>
+            <div class="mb-3">
+                <label for="age" class="form-label">DateOfBirth: </label>
+                <InputDate id="age" @bind-Value="animal.DateOfBirth" class="form-control" />
+                <ValidationMessage For="() => animal.DateOfBirth" />
+            </div>
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender: </label>
+                <InputText id="gender" @bind-Value="animal.Gender" class="form-control" />
+                <ValidationMessage For="() => animal.Gender" />
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description: </label>
+                <InputTextArea id="description" @bind-Value="animal.Description" class="form-control" />
+                <ValidationMessage For="() => animal.Description" />
+            </div>
+            <div class="mb-3">
+                <label for="status" class="form-label">Status: </label>
+                <InputText id="status" @bind-Value="animal.Status" class="form-control" />
+                <ValidationMessage For="() => animal.Status" />
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Save</button>
+            <a role="button" class="btn btn-secondary mt-2" href="/">Cancel</a>
+        </EditForm>
+    </div>
+</div>
+}
+
+@code {
+[Parameter]
+public int? Id { get; set; }
+
+private AnimalsDetails animal = new AnimalsDetails()
+{
+AnimalName = string.Empty,
+DateOfBirth = new DateOnly(),
+Gender = string.Empty,
+};
+private string title = string.Empty;
+
+protected override async Task OnParametersSetAsync()
+{
+if (Id is null)
+{
+title = "Write Animal";
+animal = new AnimalsDetails()
+{
+AnimalName = string.Empty,
+Species = string.Empty,
+DateOfBirth = DateOnly.FromDateTime(DateTime.Now),
+Gender = string.Empty,
+Description = string.Empty,
+Status = string.Empty
+};
+}
+else
+{
+title = "Edit data about Animal";
+var animals = await AnimalsController.GetAnimalAsync(Id.Value);
+animal = new AnimalsDetails()
+{
+AnimalId = animals.AnimalId,
+AnimalName = animals.AnimalName,
+Species = animals.Species,
+DateOfBirth = animals.DateOfBirth,
+Gender = animals.Gender,
+Description = animals.Description,
+Status = animals.Status
+};
+}
+}
+
+private async Task HandleSubmit()
+{
+Console.WriteLine(animal);
+if (Id is null)
+{
+var animals = new Animals
+{
+AnimalName = animal.AnimalName,
+Species = animal.Species,
+DateOfBirth = animal.DateOfBirth,
+Gender = animal.Gender,
+Description = animal.Description,
+Status = animal.Status
+};
+await AnimalsController.AddAnimalAsync(animals);
+}
+else
+{
+var animals = await AnimalsController.GetAnimalAsync(Id.Value);
+animals.AnimalName = animal.AnimalName;
+animals.Species = animal.Species;
+animals.DateOfBirth = animal.DateOfBirth;
+animals.Gender = animal.Gender;
+animals.Description = animal.Description;
+animals.Status = animal.Status;
+await AnimalsController.UpdateAnimalAsync(animals);
+}
+
+NavigationManager.NavigateTo("/");
+}
+}

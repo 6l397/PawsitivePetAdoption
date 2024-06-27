@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Admin\\Desktop\\PawsitivePetAdoption\\PawsitivePetAdoption\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\PawsitivePetAdoption.bundle.scp.css",
+      "PackagePath": "staticwebassets\\PawsitivePetAdoption.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Desktop\\PawsitivePetAdoption\\PawsitivePetAdoption\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Desktop\\PawsitivePetAdoption\\PawsitivePetAdoption\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Desktop\\PawsitivePetAdoption\\PawsitivePetAdoption\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\Desktop\\PawsitivePetAdoption\\PawsitivePetAdoption\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.PawsitivePetAdoption.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.PawsitivePetAdoption.props",
+      "PackagePath": "build\\PawsitivePetAdoption.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.PawsitivePetAdoption.props",
+      "PackagePath": "buildMultiTargeting\\PawsitivePetAdoption.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.PawsitivePetAdoption.props",
+      "PackagePath": "buildTransitive\\PawsitivePetAdoption.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

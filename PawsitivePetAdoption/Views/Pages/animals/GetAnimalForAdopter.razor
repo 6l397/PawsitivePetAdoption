@@ -1,0 +1,59 @@
+@page "/getanimal/{animalId:int}"
+
+@rendermode InteractiveServer
+@inject AnimalsController AnimalsController
+@inject UsersController UsersController
+@inject NavigationManager NavigationManager
+
+<PageTitle>Get Animal</PageTitle>
+
+@if (animal == null || adopters == null)
+{
+<p><em>Loading...</em></p>
+}
+else
+{
+<h3>Animal Details</h3>
+<p>Name: @animal.AnimalName</p>
+<p>Species: @animal.Species</p>
+<p>Date of Birth: @animal.DateOfBirth.ToString("yyyy-MM-dd")</p>
+<p>Gender: @animal.Gender</p>
+<p>Description: @animal.Description</p>
+<p>Status: @animal.Status</p>
+
+<h3>Select Adopter</h3>
+<select @bind="selectedAdopterId" class="form-select">
+    <option value="">Select an adopter</option>
+    @foreach (var adopter in adopters)
+    {
+    <option value="@adopter.Id">@adopter.FirstName @adopter.LastName</option>
+    }
+</select>
+
+<button class="btn btn-primary mt-2" @onclick="AdoptAnimal" disabled="@(selectedAdopterId == 0)">Get Pet</button>
+
+@if (!string.IsNullOrEmpty(message))
+{
+<p>@message</p>
+}
+}
+
+@code {
+[Parameter] public int animalId { get; set; }
+private Animals animal;
+private IEnumerable<Adopters> adopters;
+private int selectedAdopterId;
+private string message;
+
+protected override async Task OnInitializedAsync()
+{
+animal = await AnimalsController.GetAnimalAsync(animalId);
+adopters = await UsersController.GetUsersAsync();
+}
+
+private async Task AdoptAnimal()
+{
+await AnimalsController.AdoptAnimalAsync(selectedAdopterId, animalId);
+message = "Pet adopted successfully!";
+}
+}

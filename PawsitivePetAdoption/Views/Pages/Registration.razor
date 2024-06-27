@@ -1,0 +1,76 @@
+@page "/registration"
+
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+@inject UsersController UserController
+
+<PageTitle>Register</PageTitle>
+
+<h3>Register</h3>
+<div class="row">
+    <div class="col-md-4">
+        <EditForm Model="@newUser" OnValidSubmit="HandleSubmit" FormName="registration">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="mb-3">
+                <label for="first_name" class="form-label">First Name:</label>
+                <InputText id="first_name" @bind-Value="newUser.FirstName" class="form-control" />
+                <ValidationMessage For="() => newUser.FirstName" />
+            </div>
+            <div class="mb-3">
+                <label for="last_name" class="form-label">Last Name:</label>
+                <InputText id="last_name" @bind-Value="newUser.LastName" class="form-control" />
+                <ValidationMessage For="() => newUser.LastName" />
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label" >Email:</label>
+                <InputText id="email" @bind-Value="newUser.Email" type="email" class="form-control" />
+                <ValidationMessage For="() => newUser.Email" />
+            </div>
+            <div class="mb-3">
+                <label for="age" class="form-label">DateOfBirth:</label>
+                <InputDate id="age" @bind-Value="newUser.DateOfBirth" class="form-control" />
+                <ValidationMessage For="() => newUser.DateOfBirth" />
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone:</label>
+                <InputText id="phone" @bind-Value="newUser.Phone" type="tel" class="form-control" />
+                <ValidationMessage For="() => newUser.Phone" />
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Address:</label>
+                <InputText id="address" @bind-Value="newUser.Address" class="form-control" />
+                <ValidationMessage For="() => newUser.Address" />
+            </div>
+            
+            <div class="d-flex justify-content-start">
+                <button type="submit" class=" d-flex align-items-start flex-column mb-3 btn btn-primary me-2">Create user</button>
+                <a role="button" class="d-flex align-items-start flex-column mb-3 btn btn-secondary me-2" href="/">
+                    <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Back
+                </a>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private AdoptersDetails newUser = new AdoptersDetails()
+    {
+        DateOfBirth = DateOnly.FromDateTime(DateTime.Now)
+    };
+
+    private async Task HandleSubmit()
+    {
+        var user = new Adopters
+        {
+            FirstName = newUser.FirstName,
+            LastName = newUser.LastName,
+            Email = newUser.Email,
+            DateOfBirth = newUser.DateOfBirth,
+            Phone = newUser.Phone,
+            Address = newUser.Address,
+        };
+        await UserController.AddUserAsync(user);
+        NavigationManager.NavigateTo("/");
+    }
+}
